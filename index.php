@@ -4,7 +4,7 @@
 require_once 'libs/gemtextToHtml.php';
 require_once 'libs/fileDates.php';
 
-function processFile($inputFile, $outputFile) {
+function processFile($inputFile, $outputFile, bool $isPage) {
     # Load header and footer content
     $headerFileName = 'data/header';
     $header = file_exists($headerFileName) ? file_get_contents($headerFileName) : '';
@@ -52,6 +52,7 @@ function processFile($inputFile, $outputFile) {
 
     $pre = false;
     $previousNewLine = false;
+    $hasHeaders = false;
 
     foreach (array_slice($lines, 1) as $line) {
         $line = trim($line);
@@ -87,16 +88,19 @@ function processFile($inputFile, $outputFile) {
             $id = sanitizeId($headerContent);
             $body .= "<h3 id='$id'>$headerContent</h3>\n";
             $toc .= "\t<div style='margin-left: 40px;'><a href='#$id'>$headerContent</a></div>\n";
+            $hasHeaders = true;
         } elseif (str_starts_with($line, '##')) { # Header Level 2
             $headerContent = htmlspecialchars(substr($line, 3));
             $id = sanitizeId($headerContent);
             $body .= "<h2 id='$id'>$headerContent</h2>";
             $toc .= "\t<div style='margin-left: 20px;'><a href='#$id'>$headerContent</a></div>\n";
+            $hasHeaders = true;
         } elseif (str_starts_with($line, '#')) { # Header Level 1
             $headerContent = htmlspecialchars(substr($line, 2));
             $id = sanitizeId($headerContent);
             $body .= "<h1 id='$id'>$headerContent</h1>\n";
             $toc .= "\t<div><a href='#$id'>$headerContent</a></div>\n";
+            $hasHeaders = true;
         } elseif (str_starts_with($line, '=>')) { # Link or Image Link
             $lineWithoutHaystack = substr($line, 3);
             $parts = preg_split('/\s+/', $lineWithoutHaystack, 2);
@@ -132,10 +136,14 @@ function processFile($inputFile, $outputFile) {
 
     # Add Table of Contents and Body
     $html .= "<h1>$title</h1>\n";
-    # TODO: Insert the date after the title
-    $html .= getFileCreationModificationDates($inputFile) . "\n";
+    # Pages don't have a date (or should they?)
+    if (!$isPage) {
+        $html .= getFileCreationModificationDates($inputFile) . "\n";
+    }
 
-    $html .= "$toc<br>\n";
+    if ($hasHeaders) {
+        $html .= "$toc<br>\n";
+    }
 
     $html .= $body;
 
@@ -169,7 +177,7 @@ function isImage($url) {
 }
 
 # Usage example
-$fileName = 'decaimiento-de-plataformas-101';
+$fileName = 'index';
 $inputFile = "data/$fileName";
 $outputFile = "out/$fileName.html";
-processFile($inputFile, $outputFile);
+processFile($inputFile, $outputFile, true);
