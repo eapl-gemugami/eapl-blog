@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible&display=swap');
+
+body {
+	max-width: 800px;
+	margin: 40px auto;
+	padding: 0 10px;
+	font-family: 'Atkinson Hyperlegible', sans-serif;
+	line-height: 1.6;
+	font-size: 18px;
+	letter-spacing: .6px;
+	font-size-adjust: .5;
+}
+
+h1, h2, h3 {
+	line-height: 1.2;
+}
+
+pre {
+	font-family: monospace;
+	font-size: 16px;
+	line-height: initial;
+	overflow-x: auto;
+	color: #9ac37a;
+}
+
+td {
+	vertical-align: top;
+}
+
+/*
+ol {
+    counter-reset: item
+}
+
+li {
+display: block
+}
+
+li:before {
+content: counters(item, ".") " ";
+counter-increment: item
+}
+*/
+
+input, textarea {
+	-webkit-appearance: none;
+	appearance: none;
+	padding: 5px 8px;
+	font-size: 16px;
+	font: inherit;
+	background-color: #e1dfdf;
+	border: 1px solid #444;
+	border-radius: 0;
+}
+
+.posts-table td {
+	padding: 2px;
+	border-bottom: 1px solid;
+}
+
+input[type=file] {
+	background-color: initial;
+	border: initial;
+}
+
+blockquote {
+	margin-left: 0;
+	margin-right: 0;
+	padding: 0 15px;
+	border-left: .2em solid;
+}
+
+img {
+	max-width: 100%;
+	text-align: center;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 90%;
+}
+
+@media (prefers-color-scheme: dark) {
+	body {
+		color: #fefefe;
+		background-color: #060606;
+	}
+	a:link{
+		color:#5bf;
+	}
+	a:visited{
+		color:#ccf;
+	}
+	input, textarea {
+		color: white;
+		background-color: #222;
+		border: 1px solid white;
+	}
+	.posts-table td {
+			border-bottom: 1px solid;
+	}
+}
+
+@media (max-width: 650px) {
+	.post #content,
+	.post #title {
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+}
+
+nav ul {
+	list-style: none;
+	padding: 0;
+}
+
+nav ul li {
+	display: inline-block;
+	padding-right: 8px;
+}
+
+/* Classes */
+.field { margin-bottom: 1rem; }
+.field > label { margin-bottom: .25rem; }
+.field > * { display: block; width: 100%; box-sizing: border-box; }
+
+.editor { height: 500px; }
+.about { height: 150px; }
+.auth-form { max-width: 400px; }
+
+.posts-title { padding-left: 8px; }
+
+.posts-date { white-space: nowrap; }
+
+a:link { color: #008DBD; }
+
+a:visited { color: #008DBD; }
